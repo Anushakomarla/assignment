@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Assignment</title>
+		<script src="node_modules/angular/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/1.4.0/angular-drag-and-drop-lists.js"></script>
+		<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="src/css/index.css">
+	</head>
+	<body>
+		<div ng-app="taskProgressApp" ng-controller="taskCtrl" class="card-container">
+			<div class="card-base" ng-repeat="card in cardList">
+				<h2 class="card-heading">{{card.name}}</h2>
+				<ui dnd-list="card.items" class="draggable">
+					<li ng-repeat="item in card.items"
+				  	dnd-draggable="item"
+          		  	dnd-moved="card.items.splice($index, 1)"
+                  	dnd-effect-allowed="move"
+				  	id={{item.id}} class="item">
+				  	<div class="status-bar"></div>
+				  	<i class="fa fa-times delete-icon" id={{item.id}}  ng-click="deleteTask($event, card.items)"></i>
+				    <p class="card-title">{{item.msg}}</p>
+				    <div><i class="fa fa-bars bar-icon"></i></div>
+				    </li>
+				</ui>
+				<input class="card-input" type="text" name="Add Card" ng-model="card.newItem" placeholder="Add a card..." ng-enter="addCard(card.items, card.newItem, $index)">
+			</div>
+		</div>
+		<script src="src/jscripts/index.js"></script>
+	</body>
+</html>
